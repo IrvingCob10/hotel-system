@@ -20,8 +20,6 @@ use App\Http\Controllers\Api\RoomRateController;
 use App\Http\Controllers\Api\HotelProfileController;
 use App\Http\Controllers\Api\HotelCatalogController;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Usuario autenticado
@@ -67,6 +65,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get(
         '/hotels/{hotel}/rooms/{roomNumber}',
         [RoomController::class, 'show']
+    );
+
+    Route::put(
+        '/hotels/{hotel}/rooms/{roomNumber}',
+        [RoomController::class, 'update']
     );
 
     /*
@@ -165,60 +168,127 @@ Route::middleware('auth:sanctum')->group(function () {
         [StayController::class, 'checkIn']
     );
 
-    Route::patch(
-    '/hotels/{hotel}/rooms/{roomNumber}/stays/{stayId}/extension',
-    [StayExtensionController::class, 'update']
-);
-
-
-    
-
-Route::get(
-    '/hotels/{hotel}/departure-alerts',
-    [DepartureAlertController::class, 'index']
-);
-
-Route::get(
-    '/hotels/{hotel}/room-types',
-    [RoomTypeController::class, 'index']
-);
-
-Route::put(
-    '/hotels/{hotel}/rooms/{roomNumber}',
-    [RoomController::class, 'update']
-);
-
-Route::get('/hotels/{hotel}/rates', [RoomRateController::class, 'index']);
-Route::post('/hotels/{hotel}/rates', [RoomRateController::class, 'store']);
-Route::put('/hotels/{hotel}/rates/{rateId}', [RoomRateController::class, 'update']);
-
-Route::post('/hotels/{hotel}/room-types', [RoomTypeController::class, 'store']);
-Route::put('/hotels/{hotel}/room-types/{roomTypeId}', [RoomTypeController::class, 'update']);
-
-Route::get('/hotels/{hotel}/catalog/products', [HotelCatalogController::class, 'productsIndex']);
-Route::post('/hotels/{hotel}/catalog/products', [HotelCatalogController::class, 'productsStore']);
-Route::put('/hotels/{hotel}/catalog/products/{productId}', [HotelCatalogController::class, 'productsUpdate']);
-
-Route::get('/hotels/{hotel}/catalog/services', [HotelCatalogController::class, 'servicesIndex']);
-Route::post('/hotels/{hotel}/catalog/services', [HotelCatalogController::class, 'servicesStore']);
-Route::put('/hotels/{hotel}/catalog/services/{serviceId}', [HotelCatalogController::class, 'servicesUpdate']);
-
-Route::get('/hotels/{hotel}/catalog/products', [HotelCatalogController::class, 'productsIndex']);
-Route::post('/hotels/{hotel}/catalog/products', [HotelCatalogController::class, 'productsStore']);
-Route::put('/hotels/{hotel}/catalog/products/{productId}', [HotelCatalogController::class, 'productsUpdate']);
-
-Route::get('/hotels/{hotel}/catalog/services', [HotelCatalogController::class, 'servicesIndex']);
-Route::post('/hotels/{hotel}/catalog/services', [HotelCatalogController::class, 'servicesStore']);
-Route::put('/hotels/{hotel}/catalog/services/{serviceId}', [HotelCatalogController::class, 'servicesUpdate']);
-
     /*
     |--------------------------------------------------------------------------
-    | Perfil / datos del hotel para encabezados y comprobantes
+    | Extensión de estancia
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/my/hotel', [HotelProfileController::class, 'showMine']);
-    Route::patch('/my/hotel', [HotelProfileController::class, 'updateMine']);
+    Route::patch(
+        '/hotels/{hotel}/rooms/{roomNumber}/stays/{stayId}/extension',
+        [StayExtensionController::class, 'update']
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alertas de salida
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/hotels/{hotel}/departure-alerts',
+        [DepartureAlertController::class, 'index']
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tipos de habitación
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/hotels/{hotel}/room-types',
+        [RoomTypeController::class, 'index']
+    );
+
+    Route::post(
+        '/hotels/{hotel}/room-types',
+        [RoomTypeController::class, 'store']
+    );
+
+    Route::put(
+        '/hotels/{hotel}/room-types/{roomTypeId}',
+        [RoomTypeController::class, 'update']
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tarifas
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/hotels/{hotel}/rates',
+        [RoomRateController::class, 'index']
+    );
+
+    Route::post(
+        '/hotels/{hotel}/rates',
+        [RoomRateController::class, 'store']
+    );
+
+    Route::put(
+        '/hotels/{hotel}/rates/{rateId}',
+        [RoomRateController::class, 'update']
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Catálogo administrativo de productos
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/hotels/{hotel}/catalog/products',
+        [HotelCatalogController::class, 'productsIndex']
+    );
+
+    Route::post(
+        '/hotels/{hotel}/catalog/products',
+        [HotelCatalogController::class, 'productsStore']
+    );
+
+    Route::put(
+        '/hotels/{hotel}/catalog/products/{productId}',
+        [HotelCatalogController::class, 'productsUpdate']
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Catálogo administrativo de servicios
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/hotels/{hotel}/catalog/services',
+        [HotelCatalogController::class, 'servicesIndex']
+    );
+
+    Route::post(
+        '/hotels/{hotel}/catalog/services',
+        [HotelCatalogController::class, 'servicesStore']
+    );
+
+    Route::put(
+        '/hotels/{hotel}/catalog/services/{serviceId}',
+        [HotelCatalogController::class, 'servicesUpdate']
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | Perfil y datos del hotel
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/my/hotel',
+        [HotelProfileController::class, 'showMine']
+    );
+
+    Route::patch(
+        '/my/hotel',
+        [HotelProfileController::class, 'updateMine']
+    );
 
     /*
     |--------------------------------------------------------------------------
